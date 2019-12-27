@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movement.x = joystick.Horizontal;
-
+        
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", 0f);
         animator.SetFloat("Speed", movement.sqrMagnitude);

@@ -10,10 +10,13 @@ public class PlayerMovement : MonoBehaviour
     bool facing = true;
     public Animator animator;
     public Joystick joystick;
+    private bool isjumping;
+    public float jumpSpeed = 10f;
     void Update()
     {
         movement.x = joystick.Horizontal;
-        
+        movement.y = joystick.Vertical;
+
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", 0f);
         animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -25,6 +28,10 @@ public class PlayerMovement : MonoBehaviour
         if(movement.x < 0 && facing)
         {
             Flip();
+        }
+        if(movement.y > 0.8 && !isjumping)
+        {
+            Jump();
         }
 
     }
@@ -39,5 +46,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 xMirror = transform.localScale;
         xMirror.x *= -1;
         transform.localScale = xMirror;
+    }
+
+    void Jump()
+    {
+        rb.AddForce(movement * jumpSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
 }
